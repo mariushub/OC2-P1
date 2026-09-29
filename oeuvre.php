@@ -5,6 +5,7 @@
     // Si l'URL ne contient pas d'id, on redirige sur la page d'accueil
     if(empty($_GET['id'])) {
         header('Location: index.php');
+        exit;
     }
 
     $db = connectDb();
