@@ -1,4 +1,6 @@
 <?php 
+    require 'db.php';
+
     // get all form data
     $titre = trim($_POST['titre'] ?? '');
     $artiste = trim($_POST['artiste'] ?? '');
@@ -23,4 +25,16 @@
     $description = htmlspecialchars($description);
     $image = htmlspecialchars($image);
 
-    echo('ok');
+    // insert db
+    $db = connectDb();
+    $request = $db->prepare('INSERT INTO oeuvres (titre, description, artiste, image) VALUES (:titre, :description, :artiste, :image)');
+    $request->execute([
+        'titre' => $titre,
+        'description'=> $description,
+        'image'=> $image,
+        'artiste' => $artiste,
+    ]);
+
+    //redirect index
+    header('Location: index.php');
+    exit;
